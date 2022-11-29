@@ -9,11 +9,11 @@ print('Connected to: ' + str(HOST) +':8000')
 
 while True:
     outdata = input('Send: ')
-    s.send(outdata.encode())
-    
-    indata = s.recv(1024)
+
     if outdata == 'EXIT': # connection closed
-        s.close()
         print('Closed connection.')
         break
+    s.send(outdata.encode())
+    indata = s.recv(1024)
     print('Echo: ' + indata.decode())
+s.close()
