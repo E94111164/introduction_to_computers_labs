@@ -18,7 +18,7 @@ class ClientThread(threading.Thread):
             print(str(self.caddress) + ': '+msg)
             self.csocket.send(bytes(msg,'UTF-8'))
         print(str(self.caddress) , "closed connection")
-LOCALHOST = '127.0.0.1'
+LOCALHOST = '10.3.141.1'
 PORT = 8000
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
