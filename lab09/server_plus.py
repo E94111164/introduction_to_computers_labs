@@ -3,20 +3,22 @@ class ClientThread(threading.Thread):
     def __init__(self,clientAddress,clientsocket):
         threading.Thread.__init__(self)
         self.csocket = clientsocket
+        self.caddress = clientAddress
     def run(self):
-        print ('Connected by', clientAddress)
+        print ('Connected by', self.caddress)
         print('Waiting for connection...')
         #self.csocket.send(bytes("Hi, This is from Server..",'utf-8'))
-        msg = ''
+        # msg = ''
         while True:
             data = self.csocket.recv(2048)
+            if len(data)==0:
+                self.csocket.close()
+                break
             msg = data.decode()
-            if msg=='EXIT':
-              break
-            print (str(clientAddress) + ': '+msg)
+            print(str(self.caddress) + ': '+msg)
             self.csocket.send(bytes(msg,'UTF-8'))
-        print (str(clientAddress) , "closed connection")
-LOCALHOST = '10.3.141.1'
+        print(str(self.caddress) , "closed connection")
+LOCALHOST = '127.0.0.1'
 PORT = 8000
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
