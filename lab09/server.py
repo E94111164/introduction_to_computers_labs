@@ -17,13 +17,13 @@ while True:
 
     while True:
         indata = conn.recv(1024)
-        
-        if str(indata.decode()) == 'EXIT' : # connection closed
+        if len(indata) == 0: # connection closed
             conn.close()
-            print(str(addr)+' closed connection.')
-            print('Waiting for connection...')
+            print(str(addr) + ' closed connection')
             break
+            
         print(str(addr) + ': '+ indata.decode())
         
         outdata = indata.decode()
         conn.send(outdata.encode())
+        
